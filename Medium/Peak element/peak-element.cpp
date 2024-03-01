@@ -4,6 +4,7 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 /* The function should return the index of any
    peak element present in the array */
 
@@ -12,26 +13,17 @@ using namespace std;
 class Solution
 {
     public:
-    int peakElement(int arr[], int n)
+   int peakElement(int arr[], int n)
     {
        // Your code here
-       int s = 0;
-       int e = n-1;
-       int mid = s+(e-s)/2;
-       
-       while(s<=e){
-           if(s==e){
-               return s;
+       if(arr[0] >= arr[1]) return 0;
+       else if(arr[n - 1] >= arr[n - 2]) return n - 1;
+       else{
+           for(int i = 0; i < n; i++){
+               if(arr[i] >= arr[i + 1] && arr[i] >= arr[i-1]) return i;
+               else if(arr[i] > arr[i+1]) i++;
            }
-           else if(arr[mid] > arr[mid+1]){
-               e = mid;
-           }
-           else{
-               s = mid + 1;
-           }
-           mid = s+(e-s)/2;
        }
-      
     }
 };
 
