@@ -1,55 +1,58 @@
 //{ Driver Code Starts
-#include <bits/stdc++.h>
-
+#include<bits/stdc++.h>
 using namespace std;
+
 
 // } Driver Code Ends
 
 class Solution{
-public:
-    int maxIndexDiff(int arr[], int n) {
-        // code here
-           int prefixMin[n];
-        prefixMin[0] = arr[0];
-
-        for(int i = 1; i < n; i++){
-            prefixMin[i] = min(prefixMin[i-1], arr[i]);
+    public:
+        
+    // A[]: input array
+    // N: size of array
+    // Function to find the maximum index difference.
+    int maxIndexDiff(int a[], int n) 
+    { 
+        vector<int>v;
+        v.push_back(n-1);
+        for(int i=n-2;i>=0;i--){
+            if(a[i]>a[v.back()])v.push_back(i);
         }
-
-
-        int r,l,maxDist = INT_MIN;
-        r = l = n-1;
-
-        while(r >= 0 && l >= 0){
-            if(arr[r] >= prefixMin[l]){
-                maxDist = max(maxDist, (r-l));
-                l--;
-            }else{
-                r--;
+        int ans=0;
+        for(int i=0;i<n-1;i++){
+            while( v.size()>0 && a[i]<=a[v.back()]){
+                ans=max(ans,v.back()-i);
+                v.pop_back();
             }
-
         }
-        return maxDist;
+        return ans;
+        
     }
-
 };
 
 //{ Driver Code Starts.
-
-int main() {
-    int t;
-    cin >> t;
-    while (t--) {
-        int n, i;
-        cin >> n;
-        int a[n];
-        for (i = 0; i < n; i++) {
-            cin >> a[i];
-        }
+  
+/* Driver program to test above functions */
+int main() 
+{
+    int T;
+    //testcases
+    cin>>T;
+    while(T--){
+        int num;
+        //size of array
+        cin>>num;
+        int arr[num];
+        
+        //inserting elements
+        for (int i = 0; i<num; i++)
+            cin>>arr[i];
         Solution ob;
-        auto ans = ob.maxIndexDiff(a, n);
-        cout << ans << "\n";
+        
+        //calling maxIndexDiff() function
+        cout<<ob.maxIndexDiff(arr, num)<<endl;    
+        
     }
     return 0;
-}
+} 
 // } Driver Code Ends
